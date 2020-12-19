@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tailwind Admin Starter Template : Tailwind Toolbox</title>
+    <meta name="author" content="name">
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet"> 
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+
+</head>
+
+
+<body class="bg-gray-800 font-sans leading-normal tracking-normal mt-12">
+
+    <style>
+        #img2{
+            display: none;
+        }
+        #img3{
+            display: none;
+        }
+        #img4{
+            display: none;
+        }
+
+        #card{
+        position: absolute;
+        left: 900px;
+        top: 305px;
+    }
+    </style>
+
+    <!--Nav-->
+    <nav class="bg-gray-800 pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0">
+
+        <div class="flex flex-wrap items-center">
+            <div class="flex flex-shrink md:w-1/3 justify-center md:justify-start text-white">
+                <a href="#">
+                    <span class="text-xl pl-2"><i class="em em-grinning"></i></span>
+                </a>
+            </div>
+        </div>
+
+    </nav>
+
+
+    <div class="flex flex-col md:flex-row">
+
+        <div class="bg-gray-800 shadow-xl h-16 fixed bottom-0 mt-12 md:relative md:h-screen z-10 w-full md:w-48">
+
+            <div class="md:mt-12 md:w-48 md:fixed md:left-0 md:top-0 content-center md:content-start text-left justify-between">
+                <ul class="list-reset flex flex-row md:flex-col py-0 md:py-3 px-1 md:px-2 text-center md:text-left">
+                    <li class="mr-3 flex-1">
+                        <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-blue-600">
+                            <i class="fas fa-chart-area pr-0 md:pr-3 text-blue-600"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-white md:text-white block md:inline-block">Анализ данных</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+
+        </div>
+
+        <div class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+
+            <div class="bg-gray-800 pt-3">
+                <div class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-4 shadow text-2xl text-white">
+                    <h3 class="font-bold pl-2">Анализ уровня сахара в крови</h3>
+                </div>
+            </div>
+
+            <div id="card">
+                <!--Metric Card-->
+                <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
+                    <div class="flex flex-row items-center">
+                        <div class="flex-1 text-right md:text-center">
+                            <h5 class="font-bold uppercase text-gray-600">Норма сахара для взрослого человека:</h5>
+                            <h3 class="font-bold text-3xl"> 4,1-5,9 ммоль/литр <span class="text-green-500"></span></h3>
+                        </div>
+                    </div>
+                </div>
+                <!--/Metric Card-->
+            </div>
+
+
+            <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                <div class="w-full m-1.5">
+                    <form action="/analyze" method="POST" enctype="multipart/form-data">
+                        <label id="listbox-label" class=" block text-sm font-bold text-gray-700">
+                            Загрузите Excell-файл:
+                        </label>
+                        <input name="upload-file" type="file" required>
+                        <input type="submit" name="" value="Отправить">
+                    </form>
+                    <br>
+
+                </div>
+
+                <div class="w-full ">
+                    <label id="listbox-label" class="m-1.5 block text-sm font-bold text-gray-700">
+                      Выберите график:
+                    </label>
+                    <select name="graphs" id="graphs" onchange="changeGraph()" class="m-1.5">
+                        <option value="simple" id="simple">Простой график</option>
+                        <option value="hist" id="hist">Гистограмма</option>
+                        <option value="average" id="average">Среднее выборочное значение</option>
+                        <option value="disp" id="disp">Дисперсия</option>
+                    </select>
+                    <br>
+                </div>
+
+                <!-- Photos -->
+                <div class="w-full m-4">
+                  <img src="{{data[0]}}" alt="graph1" id="img1">
+                </div>
+
+                <div class="w-full m-4">
+                  <img src="{{data[1]}}" alt="graph2" id="img2">
+                </div>
+
+                <div class="w-full m-4">
+                  <img src="{{data[2]}}" alt="graph3" id="img3">
+                </div>
+
+                <div class="w-full m-4">
+                  <img src="{{data[3]}}" alt="graph4" id="img4">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function changeGraph(){
+            var e = document.getElementById("graphs");
+            var value = e.options[e.selectedIndex].value;
+
+            var img1 = document.getElementById("img1");
+            var img2 = document.getElementById("img2");
+            var img3 = document.getElementById("img3");
+            var img4 = document.getElementById("img4");
+            
+            switch(value) {
+            case "simple":
+                img1.style.display = "block";
+                img2.style.display = "none";
+                img3.style.display = "none";
+                img4.style.display = "none";
+                break;
+            case "hist":
+                img1.style.display = "none";
+                img2.style.display = "block";
+                img3.style.display = "none";
+                img4.style.display = "none";
+                break;
+            case "average":
+                img1.style.display = "none";
+                img2.style.display = "none";
+                img3.style.display = "block";
+                img4.style.display = "none";
+                break;
+            case "disp":
+                img1.style.display = "none";
+                img2.style.display = "none";
+                img3.style.display = "none";
+                img4.style.display = "block";
+                break;
+            default:
+                console.log("No match")
+            }
+        }
+    </script>
+
+</body>
+
+</html>
