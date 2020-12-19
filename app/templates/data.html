@@ -99,6 +99,10 @@
                             Загрузите Excell-файл:
                         </label>
                         <input name="upload-file" type="file" required>
+                        <br>
+                        <label for="grid">Вывести сетку</label>
+                        <input type="checkbox" name="grid" id="grid" value="1">
+                        <br>
                         <input type="submit" name="" value="Отправить">
                     </form>
                     <br>
@@ -119,20 +123,20 @@
                 </div>
 
                 <!-- Photos -->
-                <div class="w-full m-4">
-                  <img src="{{data[0]}}" alt="graph1" id="img1">
+                <div class="w-full m-4" id="img1">
+                  <img src="{{data[0]}}" alt="graph1" >
                 </div>
 
-                <div class="w-full m-4">
-                  <img src="{{data[1]}}" alt="graph2" id="img2">
+                <div class="w-full m-4" id="img2">
+                  <img src="{{data[1]}}" alt="graph2" >
                 </div>
 
-                <div class="w-full m-4">
-                  <img src="{{data[2]}}" alt="graph3" id="img3">
+                <div class="w-full m-4" id="img3">
+                  <img src="{{data[2]}}" alt="graph3" >
                 </div>
 
-                <div class="w-full m-4">
-                  <img src="{{data[3]}}" alt="graph4" id="img4">
+                <div class="w-full m-4" id="img4">
+                  <img src="{{data[3]}}" alt="graph4" >
                 </div>
             </div>
         </div>
